@@ -27,3 +27,7 @@ LIBS += -LC:\Qt\opencv_build_for_qt_mingw_5_3\install\x86\mingw\lib \
     -lopencv_imgproc320.dll \
     -lopencv_features2d320.dll \
     -lopencv_calib3d320.dll
+
+DISTFILES += \
+    image/400_317.jpg \
+    image/64_128.png
