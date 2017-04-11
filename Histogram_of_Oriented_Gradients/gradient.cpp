@@ -1,43 +1,63 @@
 #include "gradient.h"
 #include "ui_gradient.h"
 
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <iostream>
-
-using namespace cv;
-using namespace std;
 
 Gradient::Gradient(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Gradient)
 {
     ui->setupUi(this);
-    // C++ gradient calculation.
-    // Read image
-    Mat img = imread("..\\Histogram_of_Oriented_Gradients\\image\\400_317.jpg" , 1 );
-    if( !img.data )
+
+    //source: http://docs.opencv.org/2.4/doc/tutorials/imgproc/imgtrans/sobel_derivatives/sobel_derivatives.html
+    Mat src, src_gray;
+    Mat grad;
+    char* window_name = "Sobel Demo - Simple Edge Detector";
+    int scale = 1;
+    int delta = 0;
+    int ddepth = CV_16S;
+
+    int c;
+
+    /// Load an image
+    src = imread( "..\\Histogram_of_Oriented_Gradients\\image\\400_317.jpg" );
+    if( !src.data )
     {
-        cout <<  "Could not open or find the image" << endl ;
+         cout<<"Can't open image";
     }
-    img.convertTo(img, CV_32F, 1/255.0);
+    GaussianBlur( src, src, Size(3,3), 0, 0, BORDER_DEFAULT );
 
-    // Calculate gradients gx, gy
-    Mat gx, gy;
-    Sobel(img, gx, CV_32F, 1, 0, 1);
-    Sobel(img, gy, CV_32F, 0, 1, 1);
+    /// Convert it to gray
+    cvtColor( src, src_gray, CV_BGR2GRAY );
+    //Display original
+    namedWindow( "Source", CV_WINDOW_AUTOSIZE );
+    imshow( "Source", src );
+    /// Create window
+    namedWindow( window_name, CV_WINDOW_AUTOSIZE );
 
+    /// Generate grad_x and grad_y
+    Mat grad_x, grad_y;
+    Mat abs_grad_x, abs_grad_y;
 
-    // read an image
+    /// Gradient X
+    //Scharr( src_gray, grad_x, ddepth, 1, 0, scale, delta, BORDER_DEFAULT );
+    Sobel( src_gray, grad_x, ddepth, 1, 0, 3, scale, delta, BORDER_DEFAULT );
+    convertScaleAbs( grad_x, abs_grad_x );
 
-    // create image window named "My Image"
-    namedWindow("My Image");
-    // show the image on window
-    imshow("My Image", img);
+    /// Gradient Y
+    //Scharr( src_gray, grad_y, ddepth, 0, 1, scale, delta, BORDER_DEFAULT );
+    Sobel( src_gray, grad_y, ddepth, 0, 1, 3, scale, delta, BORDER_DEFAULT );
+    convertScaleAbs( grad_y, abs_grad_y );
+
+    /// Total Gradient (approximate)
+    addWeighted( abs_grad_x, 0.5, abs_grad_y, 0.5, 0, grad );
+
+    imshow( window_name, grad );
+
 }
 
 Gradient::~Gradient()
 {
     delete ui;
 }
+
+
