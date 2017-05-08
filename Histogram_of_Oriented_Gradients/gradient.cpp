@@ -160,8 +160,8 @@ QVector<float> Gradient::HOG_normalization(QVector<QVector<QVector<float>>> vect
     QVector<float> normalized(36*(size_X/8)*(size_Y/8));
     float temp = 0;
     unsigned int index = 0;
-    for (unsigned int i=0; i<15; i++){
-        for(unsigned int j=0; j<15; j++){
+    for (unsigned int i=0; i<(size_X/8)-1; i++){
+        for(unsigned int j=0; j<(size_Y/8)-1; j++){
             temp = 0;
             for(unsigned int k=0; k<9; k++){
                 temp+=qPow(vector[i][j][k],2);
