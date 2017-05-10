@@ -10,6 +10,7 @@
 #include <QtMath>
 #include <QFile>
 #include <QTextStream>
+#include <QDir>
 
 #include <opencv2/objdetect/objdetect.hpp>
 #include <opencv2/ml/ml.hpp>

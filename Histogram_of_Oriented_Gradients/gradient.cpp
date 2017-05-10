@@ -7,37 +7,58 @@ Gradient::Gradient(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    Mat img = imread(imageDirPath + filename, CV_8UC1);
-    int x_blocks = img.cols / BLOCK_SIZE;
-    int y_blocks = img.rows / BLOCK_SIZE;
-    printf("File: %s, width: %d, height: %d\n", filename.c_str(), img.cols, img.rows);
-    printf("x_blocks: %d, y_blocks: %d\n", x_blocks, y_blocks);
-
-    // Calculate gradients gx, gy
-    Mat gx, gy;
-    Sobel(img, gx, CV_32F, 1, 0, 1);
-    Sobel(img, gy, CV_32F, 0, 1, 1);
-
-    // Calculate gradient magnitude and direction (in degrees)
-    Mat mag, angle;
-    cartToPolar(gx, gy, mag, angle, 1);
-    // Process angles values to provide 0 to 180.0 range instead of 0 to 360.0
-    modulo180degrees(angle);
-
-    // Perform histogram computations for blocks in entire image
-    QVector<QVector<QVector<float>>> histogram(x_blocks, QVector<QVector<float>> (y_blocks, QVector<float>(9, 0.0)));
-    imageToHistogram(histogram, mag, angle, BLOCK_SIZE, x_blocks, y_blocks);
-
-    // Prepare final outputVector for neural network by normalizing block histograms
-    QVector<float> outputVector = HOG_normalization(histogram, x_blocks, y_blocks);
+    //QCoreApplication app(argc, argv);
+    QDir dir("../HOG/image/test2");
+    dir.setFilter(QDir::Files);
+    dir.setSorting(QDir::Size);
+    QFileInfoList list = dir.entryInfoList();
 
     // Open CSV file and save outputVector
     QFile csvFile(QString(csvDirPath.c_str()) + "test.csv");
     if (!csvFile.open(QIODevice::WriteOnly | QIODevice::Text))
         return;
     QTextStream csvStream(&csvFile);
-    for(int i = 0; i < outputVector.size(); i++)
-        csvStream << qSetRealNumberPrecision(6) << outputVector[i] << ',';
+
+    for (int i = 0; i < list.size(); ++i) {
+        QFileInfo fileInfo = list.at(i);
+        std::cout << qPrintable(QString("%1").arg(fileInfo.fileName()));
+        std::cout << std::endl;
+
+        Mat img = imread(fileInfo.absoluteFilePath().toStdString(), CV_8UC1);
+        cv::resize(img, img, Size(48, 32));
+        int x_blocks = img.cols / BLOCK_SIZE;
+        int y_blocks = img.rows / BLOCK_SIZE;
+        printf("File: %s, width: %d, height: %d\n", filename.c_str(), img.cols, img.rows);
+        printf("x_blocks: %d, y_blocks: %d\n", x_blocks, y_blocks);
+
+        // Calculate gradients gx, gy
+        Mat gx, gy;
+        Sobel(img, gx, CV_32F, 1, 0, 1);
+        Sobel(img, gy, CV_32F, 0, 1, 1);
+
+        // Calculate gradient magnitude and direction (in degrees)
+        Mat mag, angle;
+        cartToPolar(gx, gy, mag, angle, 1);
+        // Process angles values to provide 0 to 180.0 range instead of 0 to 360.0
+        modulo180degrees(angle);
+
+        // Perform histogram computations for blocks in entire image
+        QVector<QVector<QVector<float>>> histogram(x_blocks, QVector<QVector<float>> (y_blocks, QVector<float>(9, 0.0)));
+        imageToHistogram(histogram, mag, angle, BLOCK_SIZE, x_blocks, y_blocks);
+
+        // Prepare final outputVector for neural network by normalizing block histograms
+        QVector<float> outputVector = HOG_normalization(histogram, x_blocks, y_blocks);
+
+
+        for(int i = 0; i < outputVector.size(); i++)
+            csvStream << qSetRealNumberPrecision(6) << outputVector[i] << ',';
+        if (fileInfo.fileName().contains("face"))
+            csvStream << "0,1" << endl;
+        else if (fileInfo.fileName().contains("building"))
+            csvStream << "1,0" << endl;
+
+    }
+
     csvFile.close();
 
     /*
@@ -47,10 +68,10 @@ Gradient::Gradient(QWidget *parent) :
     minMaxLoc(angle, &minVal, &maxVal);
     printf("Angle Max: %f, min: %f\n", (maxVal), (minVal));
     */
-    mag.convertTo(mag, CV_8U);
+    /*mag.convertTo(mag, CV_8U);
     angle.convertTo(angle, CV_8U);
     imshow( "MAG", mag );
-    imshow( "ANGLE", angle );
+    imshow( "ANGLE", angle );*/
 
 }
 
