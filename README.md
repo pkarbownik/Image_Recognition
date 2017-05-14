@@ -11,3 +11,5 @@ CMake 3.7.2</br>
 OpenCV 3.2.0</br>
 <h3>Tutorial:</h3></br>
 https://wiki.qt.io/How_to_setup_Qt_and_openCV_on_Windows</br>
+<h3>Database:</h3></br>
+https://www.cs.toronto.edu/~kriz/cifar.html</br>
