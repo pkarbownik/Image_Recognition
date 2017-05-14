@@ -1,5 +1,4 @@
-# Image_Recognition
-<h1>Image Recognition  and Object Detection using Qt and OpenCV</h1>
+<h1>Image Recognition and Object Detection using Qt and OpenCV</h1>
 
 Configuration OpenCV with QT5 
 <h3>System:</h3></br>
