@@ -18,3 +18,7 @@ SOURCES += main.cpp\
 HEADERS  += object_classifier.h
 
 FORMS    += object_classifier.ui
+
+RESOURCES +=
+
+DISTFILES +=
