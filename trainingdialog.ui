@@ -607,7 +607,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_maxEpochs_2">
+          <widget class="QLineEdit" name="lineEdit_maxEpochs">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -617,7 +617,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_desiredMSE_2">
+          <widget class="QLineEdit" name="lineEdit_desiredMSE">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
