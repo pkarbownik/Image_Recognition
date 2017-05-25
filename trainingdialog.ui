@@ -696,7 +696,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
         </sizepolicy>
        </property>
        <property name="text">
-        <string>SART TAINING</string>
+        <string>START TRAINING</string>
        </property>
       </widget>
      </item>
