@@ -28,6 +28,7 @@ private slots:
 private:
     Ui::TestingDialog *ui;
     Mat src;
+    void performTestingProcess(QString csvWeightsPath,  int inputN = 324, int hiddenN = 400, int outputN = 7);
 };
 
 #endif // TESTINGDIALOG_H

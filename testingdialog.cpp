@@ -18,3 +18,7 @@ void TestingDialog::on_pushButton_clicked()
     QImage img("..\\HOG_GUI\\image\\400_317.jpg");
     ui->label_img->setPixmap(QPixmap::fromImage(img));
 }
+
+void TestingDialog::performTestingProcess(QString csvWeightsPath, int inputN, int hiddenN, int outputN){
+
+}

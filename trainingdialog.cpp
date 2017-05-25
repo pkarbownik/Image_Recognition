@@ -29,3 +29,8 @@ void TrainingDialog::on_pushButton_loadTrainingDirectory_clicked()
 {
     imgDirPath = QFileDialog::getExistingDirectory();
 }
+
+void TrainingDialog::on_pushButton_EXIT_clicked()
+{
+    this->close();
+}

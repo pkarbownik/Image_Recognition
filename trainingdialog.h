@@ -23,6 +23,8 @@ private slots:
 
     void on_pushButton_loadTrainingDirectory_clicked();
 
+    void on_pushButton_EXIT_clicked();
+
 private:
     QString imgDirPath="no image";
     Ui::TrainingDialog *ui;
