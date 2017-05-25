@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QDebug>
+#include <QFileDialog>
 #include "ui_testingdialog.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -23,12 +24,24 @@ public:
     ~TestingDialog();
 
 private slots:
-    void on_pushButton_clicked();
+
+    void on_pushButton_LoadWeights_clicked();
+
+    void on_pushButton_SelectDierctoryToTest_clicked();
+
+    void on_pushButton_rightArrow_clicked();
+
+    void on_pushButton_leftArrow_clicked();
 
 private:
     Ui::TestingDialog *ui;
     Mat src;
-    void performTestingProcess(QString csvWeightsPath,  int inputN = 324, int hiddenN = 400, int outputN = 7);
+    QString pathToWeights;
+    QString pathToTestingDirectory;
+    QFileInfoList list;
+    QFileInfo fileInfo;
+    unsigned int img_index=0;
+    void performTestingProcess(QString csvWeightsPath, QString toImagePath, int inputN = 324, int hiddenN = 400, int outputN = 7);
 };
 
 #endif // TESTINGDIALOG_H
