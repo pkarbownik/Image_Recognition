@@ -14,7 +14,8 @@ TestingDialog::~TestingDialog()
 }
 
 void TestingDialog::performTestingProcess(QString csvWeightsPath, QString toImagePath, int inputN, int hiddenN, int outputN){
-
+    qDebug()<<csvWeightsPath;
+    qDebug()<<toImagePath;
 }
 
 
@@ -31,12 +32,11 @@ void TestingDialog::on_pushButton_SelectDierctoryToTest_clicked()
     dir.setFilter(QDir::Files);
     dir.setSorting(QDir::Size);
     list = dir.entryInfoList();
-     //for (int i = 0; i < list.size(); ++i) {
     fileInfo = list.at(img_index);
     QImage img(fileInfo.filePath());
     ui->label_img->setPixmap(QPixmap::fromImage(img));
     performTestingProcess(pathToWeights, fileInfo.filePath());
-     //}
+    ui->label_Idetified->setText(fileInfo.fileName());
 }
 
 void TestingDialog::on_pushButton_rightArrow_clicked()
@@ -46,6 +46,7 @@ void TestingDialog::on_pushButton_rightArrow_clicked()
     QImage img(fileInfo.filePath());
     ui->label_img->setPixmap(QPixmap::fromImage(img));
     performTestingProcess(pathToWeights, fileInfo.filePath());
+    ui->label_Idetified->setText(fileInfo.fileName());
 }
 
 void TestingDialog::on_pushButton_leftArrow_clicked()
@@ -55,4 +56,5 @@ void TestingDialog::on_pushButton_leftArrow_clicked()
     QImage img(fileInfo.filePath());
     ui->label_img->setPixmap(QPixmap::fromImage(img));
     performTestingProcess(pathToWeights, fileInfo.filePath());
+    ui->label_Idetified->setText(fileInfo.fileName());
 }
