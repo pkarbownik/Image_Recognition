@@ -13,11 +13,17 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        object_classifier.cpp
+        object_classifier.cpp \
+    trainingdialog.cpp \
+    testingdialog.cpp
 
-HEADERS  += object_classifier.h
+HEADERS  += object_classifier.h \
+    trainingdialog.h \
+    testingdialog.h
 
-FORMS    += object_classifier.ui
+FORMS    += object_classifier.ui \
+    trainingdialog.ui \
+    testingdialog.ui
 
 RESOURCES +=
 
