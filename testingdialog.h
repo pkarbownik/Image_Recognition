@@ -9,6 +9,13 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
+#include "neuralNetwork.h"
+#include "neuralNetworkTrainer.h"
+#include <ctime>
+#include <QApplication>
+#include "globaldefs.h"
+#include "gradient.h"
+
 using namespace cv;
 
 namespace Ui {
@@ -41,7 +48,7 @@ private:
     QFileInfoList list;
     QFileInfo fileInfo;
     unsigned int img_index=0;
-    void performTestingProcess(QString csvWeightsPath, QString toImagePath, int inputN = 324, int hiddenN = 400, int outputN = 7);
+    void performTestingProcess(QString csvWeightsPath, QString toImagePath, int inputN = 324, int hiddenN = 500, int outputN = 5);
 };
 
 #endif // TESTINGDIALOG_H
