@@ -594,6 +594,9 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="text">
+            <string>500</string>
+           </property>
           </widget>
          </item>
          <item>
@@ -604,6 +607,9 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="text">
+            <string>5</string>
+           </property>
           </widget>
          </item>
          <item>
@@ -613,6 +619,9 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="text">
+            <string>1000</string>
            </property>
           </widget>
          </item>
@@ -634,6 +643,9 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="text">
+            <string>90</string>
+           </property>
           </widget>
          </item>
          <item>
@@ -643,6 +655,9 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="text">
+            <string>0.002</string>
            </property>
           </widget>
          </item>
