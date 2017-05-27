@@ -29,8 +29,8 @@ class Gradient
 
 public:
     Gradient();
-    void Gradient::PerformHOGonDir(QString ImgDirPath, Ui::TrainingDialog *ui);
-    void Gradient::PerformHOGonFile(QString imagePath);
+    void PerformHOGonDir(QString ImgDirPath, Ui::TrainingDialog *ui);
+    void PerformHOGonFile(QString imagePath);
     void modulo180degrees(Mat &angle);
     void imagePatchToHistogram(QVector<float> &patchHistogram, const Mat &mag, const Mat &angle, int x_block, int y_block, int blockSize);
     void imageToHistogram(QVector<QVector<QVector<float>>> &histogram, const Mat &mag, const Mat &angle, int blockSize, int x_blocks, int y_blocks);

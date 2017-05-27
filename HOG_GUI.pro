@@ -15,11 +15,21 @@ TEMPLATE = app
 SOURCES += main.cpp\
         object_classifier.cpp \
     trainingdialog.cpp \
-    testingdialog.cpp
+    testingdialog.cpp \
+    gradient.cpp \
+    dataReader.cpp \
+    neuralNetwork.cpp \
+    neuralNetworkTrainer.cpp
 
 HEADERS  += object_classifier.h \
     trainingdialog.h \
-    testingdialog.h
+    testingdialog.h \
+    neuralNetwork.h \
+    dataReader.h \
+    globaldefs.h \
+    gradient.h \
+    neuralNetworkTrainer.h \
+    dataEntry.h
 
 FORMS    += object_classifier.ui \
     trainingdialog.ui \

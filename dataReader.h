@@ -11,6 +11,7 @@
 //include standard header files
 #include <vector>
 #include <string>
+#include <cstring>
 
 /*******************************************************************
 * stores a data item

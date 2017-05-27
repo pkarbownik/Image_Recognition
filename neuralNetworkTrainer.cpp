@@ -204,7 +204,7 @@ void neuralNetworkTrainer::runTrainingEpoch( vector<dataEntry*> trainingSet )
 		for ( int k = 0; k < NN->nOutput; k++ )
 		{					
 			//pattern incorrect if desired and output differ
-			if ( NN->clampOutput( NN->outputNeurons[k] ) != trainingSet[tp]->target[k] ) patternCorrect = false;
+            if ( NN->clampOutput( NN->outputNeurons[k] ) != trainingSet[tp]->target[k] ) patternCorrect = false;
 			
 			//calculate MSE
 			mse += pow(( NN->outputNeurons[k] - trainingSet[tp]->target[k] ), 2);

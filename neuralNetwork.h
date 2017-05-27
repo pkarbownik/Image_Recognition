@@ -32,7 +32,7 @@ private:
 		
 	//Friends
 	//--------------------------------------------------------------------------------------------
-	friend neuralNetworkTrainer;
+    friend class neuralNetworkTrainer;
 	
 	//public methods
 	//--------------------------------------------------------------------------------------------
@@ -58,8 +58,7 @@ private:
 
 	void initializeWeights();
 	inline double activationFunction( double x );
-	inline int clampOutput( double x );
-
+    int clampOutput( double x );
 	
 };
 

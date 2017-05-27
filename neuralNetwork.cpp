@@ -317,10 +317,10 @@ inline double neuralNetwork::activationFunction( double x )
 /*******************************************************************
 * Output Clamping
 ********************************************************************/
-inline int neuralNetwork::clampOutput( double x )
+int neuralNetwork::clampOutput( double x )
 {
-	if ( x < 0.1 ) return 0;
-	else if ( x > 0.9 ) return 1;
+    if ( x < 0.1 ) return 0;
+    else if ( x > 0.9 ) return 1;
 	else return -1;
 }
 /*******************************************************************
