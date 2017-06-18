@@ -1,6 +1,8 @@
 #include "trainingdialog.h"
 
 extern bool stopTrainingFlag;
+bool loadWeightsFlag = false;
+QString csvWeithtsToLoadPath;
 
 TrainingDialog::TrainingDialog(QWidget *parent) :
     QWidget(parent),
@@ -15,17 +17,10 @@ TrainingDialog::~TrainingDialog()
 }
 
 
-void TrainingDialog::performTrainingProcess(QString ImgDirPath, int inputN, int hiddenN, int outputN, int maxEp, int desiredAccu, float learnRate){
-    ui->textBrowser_trainingLogs->append(QString::number(inputN));
-    ui->textBrowser_trainingLogs->append(QString::number(hiddenN));
-    ui->textBrowser_trainingLogs->append(QString::number(outputN));
-    ui->textBrowser_trainingLogs->append(QString::number(maxEp));
-    ui->textBrowser_trainingLogs->append(QString::number(desiredAccu));
-    ui->textBrowser_trainingLogs->append(QString::number(learnRate));
-    ImgDirPath = trainImageDirPath;
-    ui->textBrowser_trainingLogs->append(ImgDirPath);
+void TrainingDialog::performTrainingProcess(QString ImgDirPath, int inputN, int hiddenN, int outputN, int maxEp, int desiredAccu, float learnRate, float momentum){
 
     Gradient gradient;
+    gradient.inputNeurons = inputN;
     gradient.PerformHOGonDir(ImgDirPath, ui);
     srand( (unsigned int) time(0) );
 
@@ -37,39 +32,40 @@ void TrainingDialog::performTrainingProcess(QString ImgDirPath, int inputN, int 
     //create neural network
     neuralNetwork nn(gradient.inputNeurons, hiddenN, outputN);
 
-    QString csvWeights = csvWeightsPath;
-    if (csvWeights != "")
-        nn.loadWeights(csvWeights.toStdString().c_str());
-
     //create neural network trainer
     neuralNetworkTrainer nT( &nn );
-    nT.setTrainingParameters(learnRate, 0.9, false);
-    nT.setStoppingConditions(maxEp, 90);
-    nT.enableLogging("log.csv", 5);
+    nT.setTrainingParameters(learnRate, momentum, false);
+    nT.setStoppingConditions(maxEp, desiredAccu);
+    nT.enableLogging("log.csv", outputN);
+
+    if (loadWeightsFlag)
+        nn.loadWeights(csvWeithtsToLoadPath.toStdString().c_str());
 
     //train neural network on data sets
-    for (int i=0; i < d.getNumTrainingSets(); i++ )
-        nT.trainNetwork( d.getTrainingDataSet() );
+    nT.trainNetwork( d.getTrainingDataSet(), ui);
 
     //save the weights
     nn.saveWeights(csvWeightsPath.toStdString().c_str());
+    return;
+
 }
 
 void TrainingDialog::on_pushButton_startTraining_clicked()
 {
     stopTrainingFlag = false;
-    performTrainingProcess(imgDirPath,
-                           ui->lineEdit_inputNeurons->text().toInt(),
+    performTrainingProcess(imgDirPath, 324,
                            ui->lineEdit_hiddenNeurons->text().toInt(),
                            ui->lineEdit_outputNeurons->text().toInt(),
                            ui->lineEdit_maxEpochs->text().toInt(),
                            ui->lineEdit_desiredAccuracy->text().toInt(),
-                           ui->lineEdit_learningRate->text().toFloat());
+                           ui->lineEdit_learningRate->text().toFloat(),
+                           ui->lineEdit_momentum->text().toFloat());
 }
 
 void TrainingDialog::on_pushButton_loadTrainingDirectory_clicked()
 {
-    imgDirPath = QFileDialog::getExistingDirectory();
+    QFileDialog dialog(this);
+    imgDirPath = dialog.getExistingDirectory(this, tr("Open Directory"),"../Image_Recognition/train/");
 }
 
 void TrainingDialog::on_pushButton_EXIT_clicked()
@@ -80,4 +76,10 @@ void TrainingDialog::on_pushButton_EXIT_clicked()
 void TrainingDialog::on_pushButton_stopTraining_clicked()
 {
     stopTrainingFlag = true;
+}
+
+void TrainingDialog::on_pushButton_loadWeights_clicked()
+{
+    loadWeightsFlag = true;
+    csvWeithtsToLoadPath = QFileDialog::getOpenFileName(this, tr("Open Weights File"), "../Image_Recognition/csv/");
 }
