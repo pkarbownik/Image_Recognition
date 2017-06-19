@@ -9,6 +9,8 @@
 #define NNetworkTrainer
 
 #include <QtWidgets/QApplication>
+#include <QMainWindow>
+#include "trainingdialog.h"
 
 //standard includes
 #include <fstream>
@@ -23,6 +25,8 @@
 #define MAX_EPOCHS 1500
 #define DESIRED_ACCURACY 90  
 #define DESIRED_MSE 0.001 
+
+using namespace std;
 
 /*******************************************************************
 * Basic Gradient Descent Trainer with Momentum and Batch Learning
@@ -83,7 +87,7 @@ public:
 	void useBatchLearning( bool flag ){ useBatch = flag; }
 	void enableLogging( const char* filename, int resolution );
 
-	void trainNetwork( trainingDataSet* tSet );
+    void trainNetwork(trainingDataSet* tSet , Ui::TrainingDialog *ui);
 
 	//private methods
 	//--------------------------------------------------------------------------------------------

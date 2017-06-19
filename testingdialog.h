@@ -48,7 +48,7 @@ private:
     QFileInfoList list;
     QFileInfo fileInfo;
     unsigned int img_index=0;
-    void performTestingProcess(QString csvWeightsPath, QString toImagePath, int inputN = 324, int hiddenN = 500, int outputN = 5);
+    void performTestingProcess(QString csvWeightsPath, QString toImagePath, int hiddenN = 500, int outputN = 3);
 };
 
 #endif // TESTINGDIALOG_H

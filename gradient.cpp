@@ -20,12 +20,13 @@ void Gradient::PerformHOGonDir(QString ImgDirPath, Ui::TrainingDialog *ui){
         QFileInfo fileInfo = list.at(i);
 
         Mat img = imread(fileInfo.absoluteFilePath().toStdString(), CV_8UC1);
-        printf("File: %s, width: %d, height: %d\n", fileInfo.fileName().toStdString().c_str(), img.cols, img.rows);
+        //printf("File: %s, width: %d, height: %d\n", fileInfo.fileName().toStdString().c_str(), img.cols, img.rows);
         cv::resize(img, img, Size(32, 32));
         int x_blocks = img.cols / BLOCK_SIZE;
         int y_blocks = img.rows / BLOCK_SIZE;
         inputNeurons = (x_blocks - 1) * (y_blocks - 1) * 36;
-        ui->textBrowser_trainingLogs->append(QString("File: ").append(fileInfo.fileName()));
+        //ui->textBrowser_trainingLogs->append(QString("File: ").append(fileInfo.fileName()));
+        ui->textBrowser_trainingLogs->setText(QString("Processing %1/%2...").arg(QString::number(i+1), QString::number(list.size())));
         QCoreApplication::processEvents();
         //printf("x_blocks: %d, y_blocks: %d\n", x_blocks, y_blocks);
 
@@ -50,19 +51,19 @@ void Gradient::PerformHOGonDir(QString ImgDirPath, Ui::TrainingDialog *ui){
         //printf("\nVector size: %d\n", outputVector.size());
         for(int i = 0; i < outputVector.size(); i++)
             csvStream << qSetRealNumberPrecision(6) << outputVector[i] << ',';
-        if (fileInfo.fileName().contains("airplane"))
-            csvStream << "1,0,0,0,0" << endl;
+        if (fileInfo.fileName().contains("cat"))
+            csvStream << "1,0,0" << endl;
         else if (fileInfo.fileName().contains("car"))
-            csvStream << "0,1,0,0,0" << endl;
-        else if (fileInfo.fileName().contains("cat"))
-            csvStream << "0,0,1,0,0" << endl;
-        else if (fileInfo.fileName().contains("deer"))
-            csvStream << "0,0,0,1,0" << endl;
-        else if (fileInfo.fileName().contains("horse"))
-            csvStream << "0,0,0,0,1" << endl;
+            csvStream << "0,1,0" << endl;
+       // else if (fileInfo.fileName().contains("horse"))
+       //     csvStream << "0,0,1,0" << endl;
+        else if (fileInfo.fileName().contains("airplane"))
+            csvStream << "0,0,1" << endl;
     }
 
     csvFile.close();
+    ui->textBrowser_trainingLogs->append(QString("%1 files converted and saved in %2\n")
+            .arg(QString::number(list.size()), csvDirPath + csvDataFile));
 }
 
 void Gradient::PerformHOGonFile(QString imagePath){

@@ -13,9 +13,9 @@ TestingDialog::~TestingDialog()
     delete ui;
 }
 
-void TestingDialog::performTestingProcess(QString csvWeights, QString toImagePath, int inputN, int hiddenN, int outputN){
+void TestingDialog::performTestingProcess(QString csvWeights, QString toImagePath, int hiddenN, int outputN){
 
-    csvWeights = csvWeightsPath;
+    //csvWeights = csvWeightsPath;
     Gradient gradient;
     gradient.PerformHOGonFile(toImagePath);
     srand( (unsigned int) time(0) );
@@ -29,7 +29,7 @@ void TestingDialog::performTestingProcess(QString csvWeights, QString toImagePat
     neuralNetwork nn(gradient.inputNeurons, hiddenN, outputN);
     printf("Inputs: %d, hidden: %d, output: %d\n", gradient.inputNeurons, hiddenN, outputN);
     printf("Loading %s", csvWeights.toStdString().c_str());
-    nn.loadWeights(csvWeights.toStdString().c_str());
+    nn.loadWeights(pathToWeights.toStdString().c_str());
     printf("\n");
    // printf("%f\n", d.getTrainingDataSet()->trainingSet[0]->pattern[0]);
     nn.feedForward( d.getTrainingDataSet()->trainingSet[0]->pattern );
@@ -49,12 +49,12 @@ void TestingDialog::performTestingProcess(QString csvWeights, QString toImagePat
 
 void TestingDialog::on_pushButton_LoadWeights_clicked()
 {
-    pathToWeights=QFileDialog::getOpenFileName(this,tr("Open File"),QDir::currentPath(),"CSV Files(*.csv);;");
+    pathToWeights=QFileDialog::getOpenFileName(this,tr("Open Weights File"),"../Image_Recognition/csv/");
 }
 
 void TestingDialog::on_pushButton_SelectDierctoryToTest_clicked()
 {
-    pathToTestingDirectory= testImageDirPath;//QFileDialog::getExistingDirectory();
+    pathToTestingDirectory= QFileDialog::getExistingDirectory(this, tr("Open Directory"),"../Image_Recognition/test/");
     QDir dir(pathToTestingDirectory);
     dir.setFilter(QDir::Files);
     dir.setSorting(QDir::Size);

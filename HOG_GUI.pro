@@ -35,16 +35,17 @@ FORMS    += object_classifier.ui \
     trainingdialog.ui \
     testingdialog.ui
 
-INCLUDEPATH += C:\Qt\opencv_build_for_qt_mingw_5_3\install\include
-LIBS += -LC:\Qt\opencv_build_for_qt_mingw_5_3\install\x86\mingw\lib \
-    -lopencv_core320.dll \
-    -lopencv_highgui320.dll \
-    -lopencv_imgcodecs320.dll \
-    -lopencv_imgproc320.dll \
-    -lopencv_features2d320.dll \
-    -lopencv_calib3d320.dll
+INCLUDEPATH += "C:\Program Files\OpenCV-3.2.0\opencv\build\include"
+LIBS += -L"C:\Program Files\OpenCV-3.2.0\opencv-build_x64\lib\Release" \
+    -lopencv_core320 \
+    -lopencv_highgui320 \
+    -lopencv_imgcodecs320 \
+    -lopencv_imgproc320 \
+    -lopencv_features2d320 \
+    -lopencv_calib3d320
 
-DISTFILES +=
+DISTFILES += \
+    HOG_GUI.pro.user
 
 RESOURCES += \
     resorces.qrc

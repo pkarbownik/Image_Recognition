@@ -8,6 +8,6 @@ const QString csvWeightsPath("..\\Image_Recognition\\csv\\weights.csv");
 const QString testImageDirPath("..\\Image_Recognition\\appTest\\");
 const QString testImageCsvPath("..\\Image_Recognition\\csv\\oneFileCsvHogData.csv");
 
-const QVector<QString> categories = {"Airplane", "Car", "Cat", "Deer", "Horse"};
+const QVector<QString> categories = {"Cat", "Car", "Airplane"};
 
 #endif // GLOBALDEFS_H

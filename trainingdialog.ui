@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>555</width>
+    <width>658</width>
     <height>300</height>
    </rect>
   </property>
@@ -482,19 +482,6 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
        <item>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <widget class="QLabel" name="label_inputNeurons">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Input Neurons</string>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QLabel" name="label_hiddenNeurons">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -534,7 +521,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_desiredMSE">
+          <widget class="QLabel" name="label_momentum">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
@@ -542,7 +529,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Desired MSE</string>
+            <string>Momentum</string>
            </property>
           </widget>
          </item>
@@ -577,16 +564,6 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QLineEdit" name="lineEdit_inputNeurons">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QLineEdit" name="lineEdit_hiddenNeurons">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -608,7 +585,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
             </sizepolicy>
            </property>
            <property name="text">
-            <string>5</string>
+            <string>3</string>
            </property>
           </widget>
          </item>
@@ -626,12 +603,15 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_desiredMSE">
+          <widget class="QLineEdit" name="lineEdit_momentum">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="text">
+            <string>0.9</string>
            </property>
           </widget>
          </item>
@@ -657,7 +637,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
             </sizepolicy>
            </property>
            <property name="text">
-            <string>0.002</string>
+            <string>0.01</string>
            </property>
           </widget>
          </item>
@@ -666,7 +646,14 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
       </layout>
      </item>
      <item>
-      <widget class="QTextBrowser" name="textBrowser_trainingLogs"/>
+      <widget class="QTextBrowser" name="textBrowser_trainingLogs">
+       <property name="minimumSize">
+        <size>
+         <width>400</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -729,7 +716,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_saveWeights">
+      <widget class="QPushButton" name="pushButton_loadWeights">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -737,7 +724,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
         </sizepolicy>
        </property>
        <property name="text">
-        <string>SAVE WEIGHTS</string>
+        <string>LOAD WEIGHTS</string>
        </property>
       </widget>
      </item>

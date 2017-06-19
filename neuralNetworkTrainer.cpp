@@ -118,9 +118,14 @@ double neuralNetworkTrainer::getHiddenErrorGradient( int j )
 /*******************************************************************
 * Train the NN using gradient descent
 ********************************************************************/
-void neuralNetworkTrainer::trainNetwork( trainingDataSet* tSet )
+void neuralNetworkTrainer::trainNetwork( trainingDataSet* tSet, Ui::TrainingDialog *ui)
 {
-	cout	<< endl << " Neural Network Training Starting: " << endl
+    ui->textBrowser_trainingLogs->append(QString("Starting Neural Network Training..."));
+    QString textToPrint = QString("Input neurons: %1, Hidden neurons: %2, Output neurons: %3\n")
+            .arg(QString::number(NN->nInput), QString::number(NN->nHidden), QString::number(NN->nOutput));
+    ui->textBrowser_trainingLogs->append(textToPrint);
+
+    cout	<< endl << " Neural Network Training Starting: " << endl
 			<< "==========================================================================" << endl
 			<< " LR: " << learningRate << ", Momentum: " << momentum << ", Max Epochs: " << maxEpochs << endl
 			<< " " << NN->nInput << " Input Neurons, " << NN->nHidden << " Hidden Neurons, " << NN->nOutput << " Output Neurons" << endl
@@ -134,6 +139,8 @@ void neuralNetworkTrainer::trainNetwork( trainingDataSet* tSet )
 	//--------------------------------------------------------------------------------------------------------
     while (	( trainingSetAccuracy < desiredAccuracy || generalizationSetAccuracy < desiredAccuracy ) && epoch < maxEpochs && !stopTrainingFlag )
 	{			
+        QCoreApplication::processEvents();
+
 		//store previous accuracy
 		double previousTAccuracy = trainingSetAccuracy;
 		double previousGAccuracy = generalizationSetAccuracy;
@@ -152,21 +159,26 @@ void neuralNetworkTrainer::trainNetwork( trainingDataSet* tSet )
 			lastEpochLogged = epoch;
 		}
 
+        //ui->textBrowser_trainingLogs->
 		//print out change in training /generalization accuracy (only if a change is greater than a percent)
 		if ( ceil(previousTAccuracy) != ceil(trainingSetAccuracy) || ceil(previousGAccuracy) != ceil(generalizationSetAccuracy) ) 
 		{	
+            textToPrint.sprintf("Epoch: %d, TSetAcc: %0.2f%%, GSetAcc: %0.2f%%", epoch, trainingSetAccuracy, generalizationSetAccuracy);
+
+            ui->textBrowser_trainingLogs->append(textToPrint);
             cout << "Epoch :" << epoch;
 			cout << " TSet Acc:" << trainingSetAccuracy << "%, MSE: " << trainingSetMSE ;
 			cout << " GSet Acc:" << generalizationSetAccuracy << "%, MSE: " << generalizationSetMSE << endl;				
 		}
 
         //ui->textBrowser_trainingLogs->append(QString("File: ").append(fileInfo.fileName()));
-        QCoreApplication::processEvents();
 		
 		//once training set is complete increment epoch
 		epoch++;
 
 	}//end while
+
+    QCoreApplication::processEvents();
 
 	//get validation set accuracy and MSE
 	validationSetAccuracy = NN->getSetAccuracy(tSet->validationSet);
@@ -175,7 +187,11 @@ void neuralNetworkTrainer::trainNetwork( trainingDataSet* tSet )
 	//log end
 	logFile << epoch << "," << trainingSetAccuracy << "," << generalizationSetAccuracy << "," << trainingSetMSE << "," << generalizationSetMSE << endl << endl;
 	logFile << "Training Complete!!! - > Elapsed Epochs: " << epoch << " Validation Set Accuracy: " << validationSetAccuracy << " Validation Set MSE: " << validationSetMSE << endl;
-			
+
+    textToPrint = QString("Training complete. Elapsed Epochs: %1\nValidation Set Accuracy: %2, Validation Set MSE: %3\n")
+                .arg(QString::number(epoch), QString::number(validationSetAccuracy), QString::number(validationSetMSE));
+    ui->textBrowser_trainingLogs->append(textToPrint);
+
 	//out validation accuracy and MSE
 	cout << endl << "Training Complete!!! - > Elapsed Epochs: " << epoch << endl;
 	cout << " Validation Set Accuracy: " << validationSetAccuracy << endl;
@@ -193,6 +209,8 @@ void neuralNetworkTrainer::runTrainingEpoch( vector<dataEntry*> trainingSet )
 	//for every training pattern
 	for ( int tp = 0; tp < (int) trainingSet.size(); tp++)
 	{						
+        QCoreApplication::processEvents();
+
 		//feed inputs through network and backpropagate errors
 		NN->feedForward( trainingSet[tp]->pattern );
 		backpropagate( trainingSet[tp]->target );	
